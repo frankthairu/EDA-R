@@ -1,0 +1,308 @@
+---
+title: "IP Week 12"
+author: "Francis Thairu"
+date: '2022-03-19'
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+------------------------------------------------------------------------
+
+# Defining Data Question
+
+------------------------------------------------------------------------
+
+## a) Specifying the Question
+
+A Kenyan entrepreneur has created an online cryptography course and would want to advertise it on her blog. She currently targets audiences originating from various countries. In the past, she ran ads to advertise a related course on the same blog and collected data in the process. She would now like to employ our services as a Data Science Consultant to help her identify which individuals are most likely to click on her ads.
+
+## b) Defining the Metric for success.
+
+This project will be considered a success after we have thouroughly cleaned our data and performed both univariate and bivariate analysis and offering summaries of our dataset.
+
+## c) Understanding the context
+
+The dataset that we will be using is an advertisement dataset.
+
+## d) Recording the experimental design.
+
+The following steps will be followed in conducting this study:
+
+-   Define the question, the metric for success, the context, experimental design taken.
+
+-   Read and explore the given dataset. Define the appropriateness of the available data to answer the given question.
+
+-   Find and deal with outliers, anomalies, and missing data within the dataset.
+
+-   Perform univariate and bivariate analysis and recording our observations.
+
+-   From our insights we will provide a conclusion and recommendation.
+
+## e) Data Relevance The data we will be using can be found in the link below
+
+[Link](http://bit.ly/IPAdvertisingData)
+
+------------------------------------------------------------------------
+
+```{r}
+# we start by reading our dataset
+df=read.csv("http://bit.ly/IPAdvertisingData")
+
+```
+
+## Viewing top entries
+
+```{r}
+head(df)
+```
+
+```{r}
+# checking data composition
+str(df)
+```
+
+```{r}
+#checking dimension of our dataset
+dim(df)
+```
+
+```{r}
+#confirming our dataset is a dataframe
+class(df)
+```
+
+------------------------------------------------------------------------
+
+# Cleaning our data
+
+## Checking for missing values
+
+```{r}
+sum(is.na(df))
+#there is no missing values 
+```
+
+## Checking for duplicates
+
+```{r}
+sum(duplicated(df))
+#there is no duplicates
+```
+
+## Checking and dealing with outliers
+
+```{r}
+boxplot(df$`Area.Income`,main="Boxplot for Area.Income",col = "grey")
+
+boxplot(df$`Age`,main="Boxplot for Age",col = "orange")
+
+boxplot(df$`Daily.Time.Spent.on.Site`,main="Boxplot for Daily.Time.Spent.on.Site",col = "green")
+
+boxplot(df$`Male`,main="Boxplot for Male",col = "blue")
+
+boxplot(df$`Daily.Internet.Usage`,main="Boxplot for Daily.Internet.Usage",col = "yellow")
+
+boxplot(df$`Clicked.on.Ad`,main="Boxplot for Clicked.on.Ad",col = "red")
+
+
+#We dont have many outliers in our columns so we will just leave it 
+
+```
+
+------------------------------------------------------------------------
+
+# Univariate Analysis
+
+```{r}
+summary(df)
+#getting summary in our dataset i.e mean , quartiles, median, maximum and minimum
+```
+
+## Getting important measures of dispersion(range and standard deviation)
+
+```{r}
+cat("the range of age  is",range(df$'Age'))
+cat("\n")
+cat("the range of  Area.Income is",range(df$'Area.Income'))
+cat("\n")
+cat("the range of Daily.Time.Spent.on.Site  is",range(df$'Daily.Time.Spent.on.Site'))
+cat("\n")
+cat("the range of male  is",range(df$'Male'))
+cat("\n")
+cat("the range of  Daily.Internet.Usage is",range(df$'Daily.Internet.Usage'))
+cat("\n")
+
+```
+
+```{r}
+cat("the standard deviation of age  is",sd(df$'Age'))
+cat("\n")
+cat("the standard deviation of Area.Income  is",sd(df$'Area.Income'))
+cat("\n")
+cat("the standard deviatione of Daily.Time.Spent.on.Site is",sd(df$'Daily.Time.Spent.on.Site'))
+cat("\n")
+cat("the standard deviation of male is",sd(df$'Male'))
+cat("\n")
+cat("the standard deviation of Daily.Internet.Usage  is",sd(df$'Daily.Internet.Usage'))
+
+```
+
+## Getting a histogram of our columns
+
+```{r}
+ hist(df$`Area.Income`,main="histogram for Area.Income",col = "grey")
+
+hist(df$`Age`,main="histogram for Age",col = "orange")
+
+hist(df$`Daily.Time.Spent.on.Site`,main="histogram for Daily.Time.Spent.on.Site",col = "green")
+
+hist(df$`Male`,main="histogram for Male",col = "blue")
+
+hist(df$`Daily.Internet.Usage`,main="histogram for Daily.Internet.Usage",col = "yellow")
+
+hist(df$`Clicked.on.Ad`,main="histogram for Clicked.on.Ad",col = "red")
+```
+
+## Univariate Summary
+
+1.  In our dataset, many people are aged between 25 and 40.
+2.  In our dataset, the common time on most daily time spent on site is between 75 and 85.
+3.  In our dataset, the common area income is between 50,000 and 70,000.
+4.  In our dataset , there is averagely distributed \# Bivariate analysis
+
+------------------------------------------------------------------------
+
+# Bivariate analysis
+
+```{r}
+#assigning columns to respective variables
+ts<-df$Daily.Time.Spent.on.Site
+age<-df$Age
+ai<-df$Area.Income
+dis<-df$Daily.Internet.Usage
+mal<-df$Male
+ca<-df$Clicked.on.Ad
+```
+
+## Getting variance between columns
+
+```{r}
+cat("the variance between age and daily time spent on site is",var(ts,age))
+cat("\n")
+cat("the variance between age and Area.Income is",var(age,ai))
+cat("\n")
+cat("the variance between age and daily internet usage is",var(age,dis))
+cat("\n")
+cat("the variance between age and Clicked.on.Ad is",var(ca,age))
+cat("\n")
+cat("the variance between area income and daily time spent on site is",var(ts,ai))
+cat("\n")
+cat("the variance between daily internet usage and daily time spent on site is",var(ts,dis))
+cat("\n")
+cat("the variance between clicked on ad and daily time spent on site is",var(ts,ca))
+cat("\n")
+cat("the variance between daily internet usage and area income",var(ts,dis))
+cat("\n")
+cat("the variance between daily internet usage and area income is",var(ai,dis))
+cat("\n")
+cat("the variance between daily internet usage and clicked on ad is",var(ca,dis))
+cat("\n")
+
+
+```
+
+## Getting correlation between columns
+
+```{r}
+cat("the correlation between age and daily time spent on site is",cor(ts,age))
+cat("\n")
+cat("the correlation between age and Area.Income is",cor(age,ai))
+cat("\n")
+cat("the correlation between age and daily internet usage is",cor(age,dis))
+cat("\n")
+cat("the correlation between age and Clicked.on.Ad is",cor(ca,age))
+cat("\n")
+cat("the correlation between area income and daily time spent on site is",cor(ts,ai))
+cat("\n")
+cat("the correlation between daily internet usage and daily time spent on site is",cor(ts,dis))
+cat("\n")
+cat("the correlation between clicked on ad and daily time spent on site is",cor(ts,ca))
+cat("\n")
+cat("the correlation between daily internet usage and area income",cor(ts,dis))
+cat("\n")
+cat("the correlation between daily internet usage and area income is",cor(ai,dis))
+cat("\n")
+cat("the correlation between daily internet usage and clicked on ad is",cor(ca,dis))
+cat("\n")
+```
+
+## Getting covariance between columns
+
+```{r}
+cat("the covariance between age and daily time spent on site is",cov(ts,age))
+cat("\n")
+cat("the covariance between age and Area.Income is",cov(age,ai))
+cat("\n")
+cat("the covariance between age and daily internet usage is",cov(age,dis))
+cat("\n")
+cat("the covariance between age and Clicked.on.Ad is",cov(ca,age))
+cat("\n")
+cat("the covariance between area income and daily time spent on site is",cov(ts,ai))
+cat("\n")
+cat("the covariance between daily internet usage and daily time spent on site is",cov(ts,dis))
+cat("\n")
+cat("the covariance between clicked on ad and daily time spent on site is",cov(ts,ca))
+cat("\n")
+cat("the covariance between daily internet usage and area income",cov(ts,dis))
+cat("\n")
+cat("the covariance between daily internet usage and area income is",cov(ai,dis))
+cat("\n")
+cat("the covariance between daily internet usage and clicked on ad is",cov(ca,dis))
+cat("\n")
+```
+
+## Plotting scatterplots between columns
+
+```{r}
+plot(age, dis, xlab="age", ylab="daily internet usage",col = "orange")
+plot(age,ai, xlab="age", ylab="area income",col="blue")
+plot(age, ts, xlab="age", ylab="Time spent on site",col="red")
+plot(age,ca, xlab="age", ylab="clicked on ad",col="yellow")
+plot(ts,ai, xlab="Time spent on site", ylab="area income",col="pink")
+plot(ts,dis, xlab="Time spent on site", ylab="daily internet usage",col="grey")
+plot(ts,ca, xlab="Time spent on site", ylab="clicked on ad",col="green")
+plot(ai,dis, xlab="area income", ylab="daily internet usage",col="purple")
+plot(ca,dis, xlab="clicked on ad", ylab="daily internet usage",col="black")
+
+```
+
+## Bivariate summary
+
+1.  There is no correlation between clicked on ad and daily internet usage.
+2.  There is no correlation between clicked on ad and time spent on site.
+3.  There is no correlation between clicked on ad and age.
+4.  All other columns excluding one that involves clicked on add and male have a moderate correlation.
+
+------------------------------------------------------------------------
+
+# Conclusion
+
+Looking at our data analysis, we can see that there is a correlation between our main columns .
+
+------------------------------------------------------------------------
+
+# Recommendation
+
+1.  More emphasis should be put on all ages , not just between 25 and 40 years. This will ensure that we get an accurate representation.
