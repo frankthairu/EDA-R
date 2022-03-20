@@ -20,7 +20,7 @@ Our project has been built by:
 
 Francis Thairu
 
-# Setuo
+# Setup
 
 To view the codes and analysis one can easily follow the link below and it will lead you to a new web page where you can easily view.
 
