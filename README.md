@@ -8,7 +8,7 @@ I am tasked with reading and understanding our data, thoroughly cleaning our dat
 # Built by
 Our project has been built by:
 
-R studio
+* R studio
 
 * R 
 
