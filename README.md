@@ -1,4 +1,4 @@
-# Week-12-Ip
+# EDA in R
 
 # Project Description.
 
